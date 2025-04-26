@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -8,7 +9,7 @@
       margin: 0;
       padding: 0;
       height: 100vh;
-      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -18,56 +19,114 @@
       overflow: hidden;
     }
 
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.pexels.com/photos/1076607/pexels-photo-1076607.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center center/cover;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      z-index: -1;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
     h1 {
-      color: #333;
+      color: #fff;
       margin-bottom: 40px;
       padding: 0 20px;
-      font-size: 6vw;
+      font-size: 5vw;
       max-width: 90%;
-      animation: fadeIn 2s ease-in-out;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
     }
 
     .buttons {
+      position: relative;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
+      gap: 20px;
     }
 
     button {
       font-size: 5vw;
-      padding: 14px 28px;
-      min-width: 150px;
-      max-width: 300px;
+      padding: 12px 24px;
+      min-width: 100px;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      z-index: 1;
     }
 
     #yes {
-      background-color: #6c5ce7;
+      background-color: #27ae60;
       color: #fff;
     }
 
     #no {
-      background-color: #ffeaa7;
-      color: #2d3436;
+      background-color: #e74c3c;
+      color: #fff;
     }
 
-    button:hover {
-      transform: scale(1.1);
+    .thank-you {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      color: #fff;
     }
 
-    /* Animation */
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: scale(0.8);}
-      100% { opacity: 1; transform: scale(1);}
+    .cute-animal {
+      width: 200px;
+      height: 200px;
+      background: url('https://cdn.pixabay.com/photo/2017/01/31/21/22/bear-2022131_1280.png') no-repeat center center/contain;
+      animation: float 3s ease-in-out infinite;
+      margin-bottom: 30px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .tulip {
+      width: 100px;
+      height: 100px;
+      background: url('https://cdn.pixabay.com/photo/2017/01/31/21/22/tulip-2022130_1280.png') no-repeat center center/contain;
+      animation: fadeInUp 2s ease forwards;
+      opacity: 0;
+      margin-top: 20px;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .thank-message {
+      font-size: 6vw;
+      margin-top: 20px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
     }
   </style>
 </head>
 <body>
+
+  <div class="background"></div>
 
   <h1>Will you forgive me?</h1>
 
@@ -80,25 +139,32 @@
     const noBtn = document.getElementById('no');
     const yesBtn = document.getElementById('yes');
 
-    let yesBtnSize = 5; // Initial size (vw)
-    let clickCount = 0;
+    let yesBtnSize = 5; // initial font size in vw
 
-    noBtn.addEventListener('click', () => {
-      clickCount++;
+    function growYesButton() {
       yesBtnSize += 2;
       yesBtn.style.fontSize = `${yesBtnSize}vw`;
-      yesBtn.style.padding = `${14 + clickCount * 4}px ${28 + clickCount * 6}px`;
+      yesBtn.style.padding = `${12 + yesBtnSize}px ${24 + yesBtnSize}px`;
 
       if (yesBtnSize >= 30) {
-        noBtn.style.display = 'none'; // Hide No button after a few clicks
+        noBtn.style.display = 'none';
       }
-    });
+    }
+
+    noBtn.addEventListener('click', growYesButton);
 
     yesBtn.addEventListener('click', () => {
       document.body.innerHTML = `
-        <h1 style="color:#6c5ce7; font-size:6vw; animation:fadeIn 2s ease;">
-          Thank you for forgiving me.<br><br>I promise to be better.<br><br>I love you.
-        </h1>
+        <div class="background"></div>
+        <div class="thank-you">
+          <div class="cute-animal"></div>
+          <div class="tulip"></div>
+          <div class="thank-message">
+            Thank you for forgiving me.<br>
+            Here's a tulip for you, my precious sunshine.<br>
+            I love you more than words can ever say.
+          </div>
+        </div>
       `;
     });
   </script>
