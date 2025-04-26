@@ -25,7 +25,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('https://images.pexels.com/photos/1076607/pexels-photo-1076607.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center center/cover;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center center/cover;
       opacity: 0;
       animation: fadeIn 2s forwards;
       z-index: -1;
@@ -121,12 +121,21 @@
       font-size: 6vw;
       margin-top: 20px;
       text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textFade 3s ease-in-out forwards;
+    }
+
+    @keyframes textFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <div class="background"></div>
+  <div class="background" id="background"></div>
 
   <h1>Will you forgive me?</h1>
 
@@ -138,6 +147,7 @@
   <script>
     const noBtn = document.getElementById('no');
     const yesBtn = document.getElementById('yes');
+    const background = document.getElementById('background');
 
     let yesBtnSize = 5; // initial font size in vw
 
@@ -154,14 +164,17 @@
     noBtn.addEventListener('click', growYesButton);
 
     yesBtn.addEventListener('click', () => {
+      // Change background to tulip garden
+      background.style.backgroundImage = "url('https://images.unsplash.com/photo-1612369473565-63cbec9cf15e?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')";
+      
       document.body.innerHTML = `
-        <div class="background"></div>
+        <div class="background" style="background: url('https://images.unsplash.com/photo-1612369473565-63cbec9cf15e?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center center/cover; position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;"></div>
         <div class="thank-you">
           <div class="cute-animal"></div>
           <div class="tulip"></div>
           <div class="thank-message">
             Thank you for forgiving me.<br>
-            Here's a tulip for you, my precious sunshine.<br>
+            Here's a tulip for you 🌷, my precious sunshine.<br>
             I love you more than words can ever say.
           </div>
         </div>
