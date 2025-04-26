@@ -2,13 +2,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I'm Sorry</title>
+  <title>Forgive Me?</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       height: 100vh;
-      background: url('https://images.unsplash.com/photo-1558008258-631b5bd3647d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -19,42 +19,51 @@
     }
 
     h1 {
-      color: #fff;
-      text-shadow: 2px 2px 5px #000;
+      color: #333;
       margin-bottom: 40px;
       padding: 0 20px;
       font-size: 6vw;
       max-width: 90%;
+      animation: fadeIn 2s ease-in-out;
     }
 
     .buttons {
-      position: relative;
       display: flex;
-      flex-direction: row;
-      gap: 20px;
-      z-index: 10;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
     }
 
     button {
       font-size: 5vw;
-      padding: 12px 24px;
+      padding: 14px 28px;
       min-width: 150px;
-      max-width: 250px;
+      max-width: 300px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     #yes {
-      background-color: #6ab04c;
-      color: white;
+      background-color: #6c5ce7;
+      color: #fff;
     }
 
     #no {
-      background-color: #eb4d4b;
-      color: white;
+      background-color: #ffeaa7;
+      color: #2d3436;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.8);}
+      100% { opacity: 1; transform: scale(1);}
     }
   </style>
 </head>
@@ -71,25 +80,24 @@
     const noBtn = document.getElementById('no');
     const yesBtn = document.getElementById('yes');
 
-    let scale = 1; // starting scale for "Yes" button
+    let yesBtnSize = 5; // Initial size (vw)
+    let clickCount = 0;
 
-    function growYesButton() {
-      scale += 0.5; // Increase the scale more dramatically
-      yesBtn.style.transform = `scale(${scale})`;
+    noBtn.addEventListener('click', () => {
+      clickCount++;
+      yesBtnSize += 2;
+      yesBtn.style.fontSize = `${yesBtnSize}vw`;
+      yesBtn.style.padding = `${14 + clickCount * 4}px ${28 + clickCount * 6}px`;
 
-      if (scale >= 8) { // if the Yes button is too big
-        noBtn.style.display = 'none'; // Hide No button
+      if (yesBtnSize >= 30) {
+        noBtn.style.display = 'none'; // Hide No button after a few clicks
       }
-    }
-
-    noBtn.addEventListener('click', growYesButton);
+    });
 
     yesBtn.addEventListener('click', () => {
       document.body.innerHTML = `
-        <h1 style="color:white; text-shadow:2px 2px 5px #000; padding: 20px; font-size: 5vw;">
-          Thank you for forgiving me.<br><br>
-          I promise I'll be better.<br><br>
-          I love you so much.
+        <h1 style="color:#6c5ce7; font-size:6vw; animation:fadeIn 2s ease;">
+          Thank you for forgiving me.<br><br>I promise to be better.<br><br>I love you.
         </h1>
       `;
     });
